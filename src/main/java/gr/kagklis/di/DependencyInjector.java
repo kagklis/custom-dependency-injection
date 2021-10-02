@@ -91,7 +91,7 @@ public class DependencyInjector {
         Class<T> resolvedClass = findImplementationClass(passedClass);
         checkClassIsNotAbstract(resolvedClass);
         dependencies = processDependencies(passedClass, dependencies);
-        return instantiateAndAutowire(dependencies, resolvedClass);
+        return instantiateAndAutowire(resolvedClass, dependencies);
     }
 
     @SuppressWarnings("unchecked")
@@ -168,26 +168,24 @@ public class DependencyInjector {
         return dependencies;
     }
 
-    private <T> T instantiateAndAutowire(HashSet<String> dependencies, Class<T> resolvedClass) {
+    private <T> T instantiateAndAutowire(Class<T> resolvedClass, HashSet<String> dependencies) {
         T resultObject = null;
         try {
             resultObject = resolvedClass.newInstance();
-            autowire(this, resolvedClass, resultObject, dependencies);
+            autowire(resolvedClass, resultObject, dependencies);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return resultObject;
     }
 
-    private void autowire(DependencyInjector di, Class<?> actualClass, Object classInstance, HashSet<String> dependencies)
+    private void autowire(Class<?> actualClass, Object classInstance, HashSet<String> dependencies)
             throws InstantiationException, IllegalAccessException {
-
         Set<Field> fields = findAutowiredFields(actualClass);
         boolean hasMultipleFields = fields.size() > 1;
         for (Field field : fields) {
-
             HashSet<String> branchDependencies = hasMultipleFields ? new HashSet<>(dependencies) : dependencies;
-            Object fieldInstance = di.createObject(field.getType(), branchDependencies);
+            Object fieldInstance = createObject(field.getType(), branchDependencies);
             field.set(classInstance, fieldInstance);
         }
     }
