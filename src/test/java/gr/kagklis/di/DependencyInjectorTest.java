@@ -1,10 +1,9 @@
 package gr.kagklis.di;
 
-import gr.kagklis.di.components.*;
+import gr.kagklis.di.components.CarInsuranceProvider;
+import gr.kagklis.di.components.MyService;
 import gr.kagklis.di.exceptions.*;
 import gr.kagklis.di.helpers.*;
-import gr.kagklis.di.helpers.InterfaceWithInvalidQualifier;
-import gr.kagklis.di.helpers.InterfaceWithoutQualifier;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

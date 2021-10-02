@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 
-@Target({ FIELD, METHOD, PARAMETER, TYPE, ANNOTATION_TYPE })
+@Target({FIELD, METHOD, PARAMETER, TYPE, ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface CustomQualifier {
