@@ -86,4 +86,12 @@ public class DependencyInjectorTest {
     public void testClassNotMarkedAsComponent() {
         assertThrows(ComponentNotFoundException.class, () -> di.oneOf(NotMarkedAsComponent.class));
     }
+
+    @Test
+    public void testParentClassDependencies() {
+        ChildService childService = di.oneOf(ChildService.class);
+
+        assertNotNull(childService.exposeMyService());
+    }
+
 }
