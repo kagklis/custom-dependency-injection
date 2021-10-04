@@ -1,7 +1,6 @@
-package gr.kagklis.di;
+package gr.kagklis.di.components;
 
-import gr.kagklis.di.components.CarInsuranceProvider;
-import gr.kagklis.di.components.MyService;
+import gr.kagklis.di.DependencyInjector;
 import gr.kagklis.di.exceptions.*;
 import gr.kagklis.di.helpers.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DependencyInjectorTest {
+public class TestDependencyInjector {
 
     private static DependencyInjector di;
 
@@ -25,16 +24,20 @@ public class DependencyInjectorTest {
         MyService ref1 = di.singletonOf(MyService.class);
         MyService ref2 = di.singletonOf(MyService.class);
 
-        assertNotNull(ref1, "MyService was not created");
-        assertNotNull(ref2, "MyService was not created");
+        assertNotNull(ref1, "ref1 is null");
+        assertNotNull(ref2, "ref2 is null");
         assertEquals(ref1, ref2);
+        assertNotNull(ref1.otherService);
+        assertNotNull(ref1.otherService.anotherService);
+        assertNotNull(ref1.otherService.yetAnotherService);
+        assertNotNull(ref1.yetAnotherService);
     }
 
     @Test
     public void testOneOf() {
-        MyService ref = di.oneOf(MyService.class);
+        MyService myService = di.oneOf(MyService.class);
 
-        assertNotNull(ref, "MyService is null");
+        assertNotNull(myService, "myService is null");
     }
 
     @Test
@@ -62,9 +65,10 @@ public class DependencyInjectorTest {
 
     @Test
     public void testInterfaceWithQualifier() {
-        CarInsuranceProvider ref = di.oneOf(CarInsuranceProvider.class);
+        CarInsuranceProvider provider = di.oneOf(CarInsuranceProvider.class);
 
-        assertNotNull(ref, "CarInsuranceProvider is null");
+        assertNotNull(provider, "provider is null");
+        assertEquals("Provider1", provider.getSomething());
     }
 
     @Test

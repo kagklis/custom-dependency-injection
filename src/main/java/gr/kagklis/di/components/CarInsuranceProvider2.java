@@ -8,4 +8,9 @@ public class CarInsuranceProvider2 implements CarInsuranceProvider {
 
     @CustomAutowired
     MyService myService;
+
+    @Override
+    public String getSomething() {
+        return "Provider2";
+    }
 }
