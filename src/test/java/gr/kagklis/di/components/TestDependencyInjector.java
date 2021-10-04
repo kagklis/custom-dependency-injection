@@ -38,6 +38,10 @@ public class TestDependencyInjector {
         MyService myService = di.oneOf(MyService.class);
 
         assertNotNull(myService, "myService is null");
+        assertNotNull(myService.otherService);
+        assertNotNull(myService.otherService.anotherService);
+        assertNotNull(myService.otherService.yetAnotherService);
+        assertNotNull(myService.yetAnotherService);
     }
 
     @Test
@@ -46,6 +50,10 @@ public class TestDependencyInjector {
 
         assertNotNull(implementations, "List of implementations was not created");
         assertEquals(2, implementations.size());
+
+        for (CarInsuranceProvider provider: implementations) {
+            assertNotNull(provider);
+        }
     }
 
     @Test
